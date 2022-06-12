@@ -7,7 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerObject))]
 public class PlayerComponent : MonoBehaviour
 {
-    protected PlayerObject player;
+    [HideInInspector] public PlayerObject player;
 
     public virtual void Init()
     {

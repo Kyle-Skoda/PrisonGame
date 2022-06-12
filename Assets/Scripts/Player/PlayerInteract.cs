@@ -12,10 +12,14 @@ public class PlayerInteract : PlayerComponent
 
     private void Interact()
     {
-        if (Physics.BoxCast(player.cam.transform.position, Vector3.one * 0.5f, player.cam.transform.forward, out RaycastHit hit, Quaternion.identity, maxDistance, interactableLayers))
+        if (Physics.BoxCast(player.cam.transform.position, Vector3.one * 0.25f, player.cam.transform.forward, out RaycastHit hit, Quaternion.identity, maxDistance, interactableLayers))
         {
-            //TODO: Implement picking up object
-            Debug.Log($"HIT OBJECT{hit.collider.gameObject.name}");
+            if (hit.collider.GetComponent<IInteractable>() != null)
+            {
+                IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+                if (interactable is PickupableItem)
+                    interactable.Interact(player.Inventory);
+            }
         }
     }
 }
