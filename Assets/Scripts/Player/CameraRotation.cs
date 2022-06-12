@@ -16,7 +16,7 @@ public class CameraRotation : PlayerComponent
         base.Init();
 
         if (player.photonView.IsMine)
-            cam.gameObject.SetActive(true);
+            cam.enabled = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

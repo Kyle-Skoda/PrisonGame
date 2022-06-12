@@ -12,11 +12,13 @@ public class PickupableItem : MonoBehaviour, IInteractable
     public PhotonView photonView { get; private set; }
 
     private Rigidbody rb;
+    private Collider col;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         photonView = GetComponent<PhotonView>();
+        col = GetComponent<Collider>();
     }
 
     public void Interact(PlayerInventory inventory)
@@ -44,6 +46,7 @@ public class PickupableItem : MonoBehaviour, IInteractable
         rb.isKinematic = true;
         CanBePickedUp = false;
         photonView.TransferOwnership(player.photonView.OwnerActorNr);
+        col.isTrigger = true;
     }
 
     [PunRPC]
@@ -54,6 +57,13 @@ public class PickupableItem : MonoBehaviour, IInteractable
         rb.isKinematic = false;
         transform.parent = null;
         CanBePickedUp = true;
+        col.isTrigger = false;
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+            photonView.TransferOwnership(other.gameObject.GetComponent<PhotonView>().OwnerActorNr);
     }
 
     public void Interact() { }
