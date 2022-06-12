@@ -74,12 +74,12 @@ public class TeamManager : MonoBehaviourPunCallbacks, IOnEventCallback
             LocalPlayerTeam = team;
         }
 
-        OnTeamRecieved?.Invoke(playerID);
 
         if (team == Teams.Prisoner)
             prisoners.Add(player);
         else if (team == Teams.Guard)
             guards.Add(player);
+        OnTeamRecieved?.Invoke(playerID);
     }
 
     public void OnEvent(EventData photonEvent)

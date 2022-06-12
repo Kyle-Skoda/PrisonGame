@@ -10,6 +10,7 @@ public class PlayerObject : MonoBehaviour
 
     // private List<PlayerComponent> components;
 
+    public Teams team;
     public Renderer playerMesh;
     public Material guardMat;
     public Material prisonMat;
@@ -58,6 +59,9 @@ public class PlayerObject : MonoBehaviour
     private void SetPlayerColor(int playerId)
     {
         if (photonView.OwnerActorNr == playerId)
-            playerMesh.material = (TeamManager.Instance.LocalPlayerTeam == Teams.Guard) ? playerMesh.material = guardMat : playerMesh.material = prisonMat;
+        {
+            team = (TeamManager.Instance.guards.Contains(photonView.Owner)) ? Teams.Guard : Teams.Prisoner;
+            playerMesh.material = (TeamManager.Instance.guards.Contains(photonView.Owner)) ? playerMesh.material = guardMat : playerMesh.material = prisonMat;
+        }
     }
 }
