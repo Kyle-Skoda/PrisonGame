@@ -16,11 +16,13 @@ public class PlayerThrow : PlayerComponent
 
     private void OnEnable()
     {
+        if (!player.photonView.IsMine) return;
         player.Input.OnClick += OnThrow;
         player.Input.OnScroll += OnScroll;
     }
     private void OnDisable()
     {
+        if (!player.photonView.IsMine) return;
         player.Input.OnClick -= OnThrow;
         player.Input.OnScroll -= OnScroll;
     }

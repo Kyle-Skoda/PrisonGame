@@ -27,7 +27,8 @@ public class PlayerInventory : PlayerComponent
                 items.Add(i, null);
         }
 
-        player.uiManager.InvenentoryModule.Init(MaxInventorySlots);
+        if (player.photonView.IsMine)
+            player.uiManager.InvenentoryModule.Init(MaxInventorySlots);
     }
 
     private void OnEnable() => player.Input.OnScroll += OnScroll;

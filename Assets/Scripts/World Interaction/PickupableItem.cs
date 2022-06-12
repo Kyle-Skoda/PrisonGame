@@ -43,6 +43,7 @@ public class PickupableItem : MonoBehaviour, IInteractable
         transform.rotation = parent.rotation;
         rb.isKinematic = true;
         CanBePickedUp = false;
+        photonView.TransferOwnership(player.photonView.OwnerActorNr);
     }
 
     [PunRPC]
