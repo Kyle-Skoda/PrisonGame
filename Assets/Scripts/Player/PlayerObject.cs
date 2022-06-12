@@ -55,8 +55,9 @@ public class PlayerObject : MonoBehaviour
     private void OnEnable() => TeamManager.Instance.OnTeamRecieved += SetPlayerColor;
     private void OnDisable() => TeamManager.Instance.OnTeamRecieved -= SetPlayerColor;
 
-    private void SetPlayerColor()
+    private void SetPlayerColor(int playerId)
     {
-        playerMesh.material = (TeamManager.Instance.LocalPlayerTeam == Teams.Guard) ? playerMesh.material = guardMat : playerMesh.material = prisonMat;
+        if (photonView.OwnerActorNr == playerId)
+            playerMesh.material = (TeamManager.Instance.LocalPlayerTeam == Teams.Guard) ? playerMesh.material = guardMat : playerMesh.material = prisonMat;
     }
 }

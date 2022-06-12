@@ -14,7 +14,7 @@ public class TeamManager : MonoBehaviourPunCallbacks, IOnEventCallback
     public List<Player> guards = new List<Player>();
     public List<Player> prisoners = new List<Player>();
 
-    public Action OnTeamRecieved;
+    public Action<int> OnTeamRecieved;
 
     private void Awake()
     {
@@ -71,9 +71,10 @@ public class TeamManager : MonoBehaviourPunCallbacks, IOnEventCallback
 
         if (player == PhotonNetwork.LocalPlayer)
         {
-            OnTeamRecieved?.Invoke();
             LocalPlayerTeam = team;
         }
+
+        OnTeamRecieved?.Invoke(playerID);
 
         if (team == Teams.Prisoner)
             prisoners.Add(player);
